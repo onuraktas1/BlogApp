@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories
 {
-    internal class GenericRepository<T> : IGenericDal<T> where T : class, new()
+    public class GenericRepository<T> : IGenericDal<T> where T : class, new()
     {
         public void Add(T item)
         {
