@@ -42,7 +42,19 @@
                                 <h5 class="card-title">
                                     <a href="single.html">@item.Title</a>
                                 </h5>
-                                <p class="card-text mb-3">@item.Content.Substring(0, item.Content.Substring(0, 130).LastIndexOf(" "))...</p>
+                                @* <p class="card-text mb-3">@item.Content.Substring(0, item.Content.Substring(0, 130).LastIndexOf(" "))...</p> *@
+
+                                <p class="card-text mb-3">
+                                    @if (item.Content.Length >= 130)
+                                    {
+                                    <p>@item.Content.Substring(0, item.Content.Substring(0, 130).LastIndexOf(" "))<strong>...</strong></p>
+                                    }
+                                    else
+                                    {
+                                    <p> @item.Content.ToString()</p>
+                                    }
+                                </p>
+
                                 <a href="/Blog/BlogDetails/@item.Id" class="btn btn-primary read-m">Devamını Oku</a>
                             </div>
                             <br>
