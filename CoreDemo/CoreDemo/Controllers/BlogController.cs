@@ -11,5 +11,10 @@ namespace CoreDemo.Controllers
         {
             return View(_blogManager.GetListWithCategory());
         }
+
+        public IActionResult BlogDetails(int id)
+        {
+            return View();
+        }
     }
 }
