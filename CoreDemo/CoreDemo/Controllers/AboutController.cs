@@ -10,7 +10,7 @@ namespace CoreDemo.Controllers
         private readonly AboutManager _aboutManager = new(new EfAboutRepository());
         public IActionResult Index()
         {
-            List<About> data = _aboutManager.GetList();
+            List<About> data = _aboutManager.GetAll();
           
             return View(data);
         }

@@ -1,0 +1,48 @@
+﻿@model EntityLayer.Concrete.Blog
+@{
+    ViewData["Title"] = "BlogAdd";
+    Layout = "~/Views/Shared/_WriterLayout.cshtml";
+}
+
+<h1 style="text-align:center">Yeni Blog Ekle</h1>
+<form asp-controller="Blog" asp-action="BlogAdd" method="post">
+
+
+    <label for="validationCustom01">Blog Başlığı</label>
+    <input asp-for="Title" class="form-control" />
+    <span asp-validation-for="Title" class="text-danger"></span>
+    <br>
+
+    <label for="validationCustom01">Blog Görseli</label>
+    <input asp-for="Image" class="form-control" />
+    <span asp-validation-for="Image" class="text-danger"></span>
+
+    <br>
+
+    <label for="validationCustom01">Blog Küçük Görseli</label>
+    <input asp-for="ThumbNailImage" class="form-control" />
+    <span asp-validation-for="ThumbNailImage" class="text-danger"></span>
+
+    <br>
+
+    <label for="validationCustom01">Blog Kategorisi</label>
+    <input asp-for="CategoryId" class="form-control" />
+    @* <span asp-validation-for="ThumbNailImage" class="text-danger"></span> *@
+
+    <br>
+
+    <label for="validationCustom02">Blog İçeriği</label>
+    <textarea asp-for="Content" class="form-control" rows="15" cols="3"></textarea>
+    @* <input asp-for="Content" class="form-control" /> *@
+
+    @* <input asp-area="Content" class="form-control" /> *@
+
+    @* @Html.TextAreaFor(x=>x.Content,10,3,new{@class="form-control"}) *@
+
+    <span asp-validation-for="Content" class="text-danger"></span>
+    <br>
+
+    <button type="submit" class="btn btn-primary submit mb-4">Ekle</button>
+
+
+</form>

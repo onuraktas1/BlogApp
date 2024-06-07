@@ -26,5 +26,10 @@ namespace CoreDemo.Controllers
         {
             return PartialView();
         }
+
+        public PartialViewResult WriterFooterPartial()
+        {
+            return PartialView();
+        }
     }
 }
