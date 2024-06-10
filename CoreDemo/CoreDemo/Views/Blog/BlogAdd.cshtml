@@ -26,18 +26,13 @@
     <br>
 
     <label for="validationCustom01">Blog Kategorisi</label>
-    <input asp-for="CategoryId" class="form-control" />
-    @* <span asp-validation-for="ThumbNailImage" class="text-danger"></span> *@
+    <select asp-for="CategoryId" asp-items="ViewBag.CategoryValue" class="form-control"></select>
+
 
     <br>
 
     <label for="validationCustom02">Blog İçeriği</label>
     <textarea asp-for="Content" class="form-control" rows="15" cols="3"></textarea>
-    @* <input asp-for="Content" class="form-control" /> *@
-
-    @* <input asp-area="Content" class="form-control" /> *@
-
-    @* @Html.TextAreaFor(x=>x.Content,10,3,new{@class="form-control"}) *@
 
     <span asp-validation-for="Content" class="text-danger"></span>
     <br>

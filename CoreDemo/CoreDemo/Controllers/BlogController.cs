@@ -6,6 +6,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CoreDemo.Controllers
 {
@@ -32,6 +33,17 @@ namespace CoreDemo.Controllers
 
         public IActionResult BlogAdd()
         {
+            CategoryManager categoryManager = new(new EfCategoryRepository());
+
+            List<SelectListItem> categoryValue = (from x in categoryManager.GetAll()
+                                                  select new SelectListItem
+                                                  {
+                                                      Text = x.Name,
+                                                      Value = x.Id.ToString()
+
+                                                  }).ToList();
+
+            ViewBag.CategoryValue = categoryValue;
             return View();
         }
         [HttpPost]
