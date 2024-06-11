@@ -20,5 +20,7 @@ namespace DataAccessLayer.EntityFramework
                 return context.Blogs.Include(b => b.Category).ToList();
             }
         }
+
+     
     }
 }

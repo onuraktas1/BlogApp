@@ -1,0 +1,48 @@
+﻿@model EntityLayer.Concrete.Blog
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_WriterLayout.cshtml";
+}
+
+<h1>Blog Düzenleme Sayfası</h1>
+<br>
+<form asp-action="Edit" asp-controller="Blog" method="post">
+
+
+    @*
+    @Html.Label("Id")
+    @Html.TextBoxFor(x=>x.Id,new{@class="form-control"}) *@
+
+    <label>Id</label>
+    <input asp-for="Id" class="form-control" />
+
+    <label>Blog Başlığı</label>
+    <input asp-for="Title" class="form-control" />
+    <span asp-validation-for="Title" class="text-danger"></span>
+    <br>
+
+    <label>Blog Thumbnail Url</label>
+    <input asp-for="ThumbNailImage" class="form-control" />
+    <span asp-validation-for="ThumbNailImage" class="text-danger"></span>
+    <br>
+
+    <label>Blog Görseli </label>
+    <input asp-for="Image" class="form-control" />
+    <span asp-validation-for="Image" class="text-danger"></span>
+    <br>
+
+    <label>Blog Kategori </label>
+    <input asp-for="CategoryId" class="form-control" />
+    <span asp-validation-for="Category" class="text-danger"></span>
+    <br>
+
+    <label>Blog İçeriği </label>
+    <textarea asp-for="Content" class="form-control" rows="15" cols="3"></textarea>
+    <span asp-validation-for="Content" class="text-danger"></span>
+    <br>
+
+
+    <button type="submit" class="btn btn-primary submit mb-4">Düzenle</button>
+
+</form>
+

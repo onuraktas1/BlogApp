@@ -27,7 +27,7 @@ namespace CoreDemo.Controllers
 
         public IActionResult BlogListByWriter()
         {
-            var data = _blogManager.GetListByWriter(1);
+            var data = _blogManager.GetListWithCategory().Where(x => x.WriterId == 1).ToList();
             return View(data);
         }
 
@@ -70,6 +70,29 @@ namespace CoreDemo.Controllers
                 return View();
             }
         }
+
+        public IActionResult Delete(int id)
+        {
+            Blog blog = _blogManager.GetById(id);
+
+            _blogManager.Delete(blog);
+
+            return RedirectToAction("BlogListByWriter");
+        }
+
+        public IActionResult Edit(int id)
+        {
+            var value = _blogManager.GetById(id);
+            return View(value);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Blog blog)
+        {
+            return RedirectToAction("BlogListByWriter");
+        }
+
+
 
     }
 }
