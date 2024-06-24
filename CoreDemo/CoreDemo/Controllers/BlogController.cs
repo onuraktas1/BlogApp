@@ -46,6 +46,8 @@ namespace CoreDemo.Controllers
             ViewBag.CategoryValue = categoryValue;
             return View();
         }
+
+
         [HttpPost]
         public IActionResult BlogAdd(Blog blog)
         {
@@ -82,6 +84,16 @@ namespace CoreDemo.Controllers
 
         public IActionResult Edit(int id)
         {
+            CategoryManager categoryManager = new(new EfCategoryRepository());
+
+            List<SelectListItem> categoryValue = (from x in categoryManager.GetAll()
+                                                  select new SelectListItem
+                                                  {
+                                                      Text = x.Name,
+                                                      Value = x.Id.ToString()
+
+                                                  }).ToList();
+            ViewBag.CategoryValue = categoryValue;
             var value = _blogManager.GetById(id);
             return View(value);
         }
@@ -89,6 +101,11 @@ namespace CoreDemo.Controllers
         [HttpPost]
         public IActionResult Edit(Blog blog)
         {
+            Blog oldBlog = _blogManager.GetById(blog.Id);
+            blog.WriterId = oldBlog.WriterId;
+            blog.Status = oldBlog.Status;
+            blog.CreateDate = oldBlog.CreateDate;
+            _blogManager.Update(blog);
             return RedirectToAction("BlogListByWriter");
         }
 

@@ -32,7 +32,7 @@
     <br>
 
     <label>Blog Kategori </label>
-    <input asp-for="CategoryId" class="form-control" />
+    <select asp-for="CategoryId" asp-items="ViewBag.CategoryValue" class="form-control"></select>
     <span asp-validation-for="Category" class="text-danger"></span>
     <br>
 
