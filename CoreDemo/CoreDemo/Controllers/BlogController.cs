@@ -14,6 +14,7 @@ namespace CoreDemo.Controllers
     public class BlogController : Controller
     {
         BlogManager _blogManager = new(new EfBlogRepository());
+        CategoryManager categoryManager = new(new EfCategoryRepository());
         public IActionResult Index()
         {
             return View(_blogManager.GetListWithCategory());
@@ -33,7 +34,6 @@ namespace CoreDemo.Controllers
 
         public IActionResult BlogAdd()
         {
-            CategoryManager categoryManager = new(new EfCategoryRepository());
 
             List<SelectListItem> categoryValue = (from x in categoryManager.GetAll()
                                                   select new SelectListItem
@@ -84,8 +84,6 @@ namespace CoreDemo.Controllers
 
         public IActionResult Edit(int id)
         {
-            CategoryManager categoryManager = new(new EfCategoryRepository());
-
             List<SelectListItem> categoryValue = (from x in categoryManager.GetAll()
                                                   select new SelectListItem
                                                   {
