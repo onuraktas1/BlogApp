@@ -4,6 +4,7 @@ using DataAccessLayer.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20240809194112_mig_add_score_column")]
+    partial class mig_add_score_column
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,28 +104,6 @@ namespace DataAccessLayer.Migrations
                     b.HasIndex("WriterId");
 
                     b.ToTable("Blogs");
-                });
-
-            modelBuilder.Entity("EntityLayer.Concrete.BlogRayting", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BlogID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RaytingCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TotalScore")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BlogRaytings");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.Category", b =>
