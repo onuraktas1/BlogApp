@@ -13,8 +13,8 @@ namespace CoreDemo.Controllers
     [AllowAnonymous]
     public class BlogController : Controller
     {
-        BlogManager _blogManager = new(new EfBlogRepository());
-        CategoryManager categoryManager = new(new EfCategoryRepository());
+        private readonly BlogManager _blogManager = new(new EfBlogRepository());
+        private readonly CategoryManager categoryManager = new(new EfCategoryRepository());
         public IActionResult Index()
         {
             return View(_blogManager.GetListWithCategory());
