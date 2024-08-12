@@ -14,6 +14,11 @@ namespace DataAccessLayer.Concrete
         {
             optionsBuilder.UseSqlServer("Server=.;Database=BlogDb;Trusted_Connection=True;TrustServerCertificate=true");
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Blog>().ToTable(tb => tb.HasTrigger("AddBlogInRatingTable"));
+            modelBuilder.Entity<Comment>().ToTable(tb => tb.HasTrigger("AddScoreInComment"));
+        }
 
         public DbSet<About> Abouts { get; set; }
         public DbSet<Blog> Blogs { get; set; }

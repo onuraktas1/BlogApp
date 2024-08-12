@@ -9,18 +9,43 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Concrete
 {
-	public class WriterManager : IWriterService
-	{
-		IWriterDal _writerDal;
+    public class WriterManager : IWriterService
+    {
+        IWriterDal _writerDal;
 
-		public WriterManager(IWriterDal writerDal)
-		{
-			_writerDal = writerDal;
-		}
+        public WriterManager(IWriterDal writerDal)
+        {
+            _writerDal = writerDal;
+        }
 
-		public void Add(Writer writer)
-		{
-			_writerDal.Add(writer);
-		}
-	}
+        public void Add(Writer writer)
+        {
+            _writerDal.Add(writer);
+        }
+
+        public void Delete(Writer t)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Writer> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Writer GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Writer> GetWriterById(int id)
+        {
+            return _writerDal.GetAll(x => x.Id == id);
+        }
+
+        public void Update(Writer t)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
