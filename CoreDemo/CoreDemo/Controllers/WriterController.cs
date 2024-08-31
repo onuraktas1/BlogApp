@@ -44,7 +44,7 @@ namespace CoreDemo.Controllers
             return View(writerData);
         }
 
-        [HttpPost]
+        [AllowAnonymous, HttpPost]
         public IActionResult WriterEditProfile(Writer writer)
         {
             WriterValidator writerValidator = new();
@@ -65,5 +65,14 @@ namespace CoreDemo.Controllers
             }
             return View();
         }
+
+        [AllowAnonymous, HttpPost]
+        public IActionResult WriterAdd(Writer writer)
+        {
+            _writerManager.Add(writer);
+
+            return RedirectToAction("Index", "DashBoard");
+        }
+
     }
 }
