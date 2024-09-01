@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
+using CoreDemo.Models;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
@@ -66,9 +67,30 @@ namespace CoreDemo.Controllers
             return View();
         }
 
-        [AllowAnonymous, HttpPost]
-        public IActionResult WriterAdd(Writer writer)
+        [AllowAnonymous, HttpGet]
+        public IActionResult WriterAdd()
         {
+            return RedirectToAction("Index", "DashBoard");
+        }
+
+        [AllowAnonymous, HttpPost]
+        public IActionResult WriterAdd(AddProfileImage addProfileImage)
+        {
+            Writer writer = new Writer();
+            if (addProfileImage.Image != null)
+            {
+                var extension = Path.GetExtension(addProfileImage.Image.FileName);
+                var newImageName = Guid.NewGuid() + extension;
+                var location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Writer/ImageFiles", newImageName);
+                var stream = new FileStream(location, FileMode.Create);
+                addProfileImage.Image.CopyTo(stream);
+                writer.Image = newImageName;
+            }
+            writer.Mail = addProfileImage.Mail;
+            writer.Name = addProfileImage.Name;
+            writer.Password = addProfileImage.Password;
+            writer.status = true;
+            writer.About = addProfileImage.About;
             _writerManager.Add(writer);
 
             return RedirectToAction("Index", "DashBoard");
