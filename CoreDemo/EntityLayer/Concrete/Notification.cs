@@ -14,5 +14,6 @@ namespace EntityLayer.Concrete
         public string Details { get; set; }
         public DateTime Date { get; set; }
         public bool Status { get; set; }
+        public string Color { get; set; }
     }
 }
