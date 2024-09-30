@@ -10,11 +10,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CoreDemo.Controllers
 {
-    [AllowAnonymous]
     public class BlogController : Controller
     {
         private readonly BlogManager _blogManager = new(new EfBlogRepository());
         private readonly CategoryManager categoryManager = new(new EfCategoryRepository());
+        private readonly WriterManager _writerManager = new(new EfWriterRepository());
         public IActionResult Index()
         {
             return View(_blogManager.GetListWithCategory());
@@ -28,7 +28,10 @@ namespace CoreDemo.Controllers
 
         public IActionResult BlogListByWriter()
         {
-            var data = _blogManager.GetListWithCategory().Where(x => x.WriterId == 1).ToList();
+            var userMail = User.Identity.Name;
+            var writerId = _writerManager.GetAll().Where(x => x.Mail == userMail).Select(x => x.Id).FirstOrDefault();
+
+            var data = _blogManager.GetListWithCategory().Where(x => x.WriterId == writerId).ToList();
             return View(data);
         }
 
@@ -54,12 +57,14 @@ namespace CoreDemo.Controllers
             BlogValidator validationRules = new();
 
             ValidationResult results = validationRules.Validate(blog);
+            var userMail = User.Identity.Name;
+            var writerId = _writerManager.GetAll().Where(x => x.Mail == userMail).Select(x => x.Id).FirstOrDefault();
 
             if (results.IsValid)
             {
                 blog.Status = true;
                 blog.CreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
-                blog.WriterId = 1;
+                blog.WriterId = writerId;
                 _blogManager.Add(blog);
                 return RedirectToAction("BlogListByWriter", "Blog");
             }
@@ -99,8 +104,12 @@ namespace CoreDemo.Controllers
         [HttpPost]
         public IActionResult Edit(Blog blog)
         {
+            var userMail = User.Identity.Name;
+            var writerId = _writerManager.GetAll().Where(x => x.Mail == userMail).Select(x => x.Id).FirstOrDefault();
+
+
             Blog oldBlog = _blogManager.GetById(blog.Id);
-            blog.WriterId = oldBlog.WriterId;
+            blog.WriterId = writerId;
             blog.Status = oldBlog.Status;
             blog.CreateDate = oldBlog.CreateDate;
             _blogManager.Update(blog);

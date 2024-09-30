@@ -6,14 +6,19 @@ using EntityLayer.Concrete;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Elfie.Serialization;
+using System.Security.Claims;
 
 namespace CoreDemo.Controllers
 {
     public class WriterController : Controller
     {
         private readonly WriterManager _writerManager = new(new EfWriterRepository());
+        [Authorize]
         public IActionResult Index()
         {
+            var userMail = User.Identity.Name;
+            ViewBag.v = userMail;
             return View();
         }
         public IActionResult WriterProfile()
@@ -38,14 +43,17 @@ namespace CoreDemo.Controllers
         {
             return PartialView();
         }
-        [AllowAnonymous]
+
         public IActionResult WriterEditProfile()
         {
-            var writerData = _writerManager.GetById(1);
+            var userMail = User.Identity.Name;
+
+            var writerId = _writerManager.GetAll().Where(x => x.Mail == userMail).Select(x => x.Id).FirstOrDefault();
+            var writerData = _writerManager.GetById(writerId);
             return View(writerData);
         }
 
-        [AllowAnonymous, HttpPost]
+        [HttpPost]
         public IActionResult WriterEditProfile(Writer writer)
         {
             WriterValidator writerValidator = new();

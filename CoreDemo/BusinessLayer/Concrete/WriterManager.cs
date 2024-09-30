@@ -30,7 +30,7 @@ namespace BusinessLayer.Concrete
 
         public List<Writer> GetAll()
         {
-            throw new NotImplementedException();
+            return _writerDal.GetAll();
         }
 
         public Writer GetById(int id)

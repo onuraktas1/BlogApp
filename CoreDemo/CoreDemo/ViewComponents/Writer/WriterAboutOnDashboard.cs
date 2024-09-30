@@ -10,7 +10,11 @@ namespace CoreDemo.ViewComponents.Writer
 
         public IViewComponentResult Invoke()
         {
-            var data = _writerManager.GetWriterById(1);
+            var userMail = User.Identity.Name;
+
+            var writerId = _writerManager.GetAll().Where(x => x.Mail == userMail).Select(x => x.Id).FirstOrDefault();
+
+            var data = _writerManager.GetWriterById(writerId);
             return View(data);
         }
     }

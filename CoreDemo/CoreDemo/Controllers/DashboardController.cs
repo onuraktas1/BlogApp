@@ -9,7 +9,7 @@ namespace CoreDemo.Controllers
     public class DashboardController : Controller
     {
         private readonly BlogManager _blogManager = new(new EfBlogRepository());
-        [AllowAnonymous]
+     
         public IActionResult Index()
         {
             Context context = new();
