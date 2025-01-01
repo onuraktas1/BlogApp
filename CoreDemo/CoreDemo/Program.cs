@@ -35,7 +35,7 @@ namespace CoreDemo
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
                 options.LoginPath = "/Login/Index/";
-                options.SlidingExpiration = true; 
+                options.SlidingExpiration = true;
                 options.Cookie.IsEssential = true;
 
             });
@@ -70,9 +70,14 @@ namespace CoreDemo
             app.UseAuthorization();
 
             app.UseSession();
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.MapControllerRoute(
+                name: "areas",
+                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
         }
