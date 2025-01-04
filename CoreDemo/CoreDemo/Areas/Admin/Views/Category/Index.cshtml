@@ -28,15 +28,15 @@
             <td>@item.Id</td>
             <td>@item.Name</td>
             <td><a href="#" class="btn btn-primary"></a></td>
-            <td><a href="#" class="btn btn-danger"></a></td>
+            <td><a href="/Admin/Category/CategoryDelete/@item.Id" itemid="DeleteBtn" onclick="return confirm('Silmek istediğinize emin misiniz?')" class="btn btn-danger"></a></td>
             <td><a href="#" class="btn btn-success"></a></td>
         </tr>
     }
 
 </table>
-<a href="#" class="btn btn-primary">Yeni Kategori</a>
+<a href="/Admin/Category/CategoryAdd" class="btn btn-primary">Yeni Kategori</a>
 <br />
 <br />
 
-@Html.PagedListPager((IPagedList)Model, page => Url.Action("Category", "Admin", new { page }))
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
 

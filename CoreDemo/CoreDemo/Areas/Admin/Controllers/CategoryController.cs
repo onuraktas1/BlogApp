@@ -19,13 +19,13 @@ namespace CoreDemo.Areas.Admin.Controllers
             var categories = _categoryManager.GetAll().ToPagedList(page, 3);
             return View(categories);
         }
-        public IActionResult Add()
+        public IActionResult CategoryAdd()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Add(Category category)
+        public IActionResult CategoryAdd(Category category)
         {
             CategoryValidator validationRules = new();
 
@@ -46,6 +46,15 @@ namespace CoreDemo.Areas.Admin.Controllers
                 }
                 return View();
             }
+        }
+
+        public IActionResult CategoryDelete(int id)
+        {
+            Category category = _categoryManager.GetById(id);
+
+            _categoryManager.Delete(category);
+
+            return RedirectToAction("Index");
         }
     }
 }
