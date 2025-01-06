@@ -26,9 +26,9 @@ namespace DataAccessLayer.Concrete
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
             modelBuilder.Entity<Message2>()
-                .HasOne(x=>x.ReceiverUser)
-                .WithMany(y=>y.WriterReceiver)
-                .HasForeignKey(z=>z.ReceiverId)
+                .HasOne(x => x.ReceiverUser)
+                .WithMany(y => y.WriterReceiver)
+                .HasForeignKey(z => z.ReceiverId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
         }
@@ -45,5 +45,6 @@ namespace DataAccessLayer.Concrete
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Message2> Messages2 { get; set; }
+        public DbSet<Admin> Admins { get; set; }
     }
 }
