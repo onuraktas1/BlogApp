@@ -17,31 +17,31 @@ namespace CoreDemo.Areas.Admin.Controllers
 
             categoryClasses.Add(new CategoryClass
             {
-                CategoryName = "Teknoloji",
-                CategorytCount = 10
+                categoryname = "Teknoloji",
+                categorycount = 10
             });
             categoryClasses.Add(new CategoryClass
             {
-                CategoryName = "Yazılım",
-                CategorytCount = 12
+                categoryname = "Yazılım",
+                categorycount = 12
             });
             categoryClasses.Add(new CategoryClass
             {
-                CategoryName = "Donanım",
-                CategorytCount = 5
+                categoryname = "Donanım",
+                categorycount = 5
             });
             categoryClasses.Add(new CategoryClass
             {
-                CategoryName = "Spor",
-                CategorytCount = 4
+                categoryname = "Spor",
+                categorycount = 4
             });
             categoryClasses.Add(new CategoryClass
             {
-                CategoryName = "Tiyatro",
-                CategorytCount = 3
+                categoryname = "Tiyatro",
+                categorycount = 3
             });
 
-            return Json(new { jsonList = categoryClasses });
+            return Json(new { jsonlist = categoryClasses });
         }
     }
 }
