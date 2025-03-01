@@ -1,0 +1,10 @@
+﻿<div class="tech-btm">
+    <p>Güncel Bloglarımızdan Haberdar Olun </p>
+    @* <form action="/NewsLetter/SubscribeMail/" method="post"> *@
+
+    <form asp-action="SubscribeMail" asp-controller="NewsLetter" method="post">
+        <input type="email" placeholder="Email" required="" name="Mail">
+        <input type="submit" value="Abone ol">
+    </form>
+
+</div>
