@@ -12,7 +12,8 @@ namespace DataAccessLayer.Concrete
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=.;Database=BlogDb;Trusted_Connection=True;TrustServerCertificate=true");
+            // optionsBuilder.UseSqlServer("Server=.;Database=BlogDb;Trusted_Connection=True;TrustServerCertificate=true");
+            optionsBuilder.UseSqlServer("Server=localhost;Database=BlogDb;User Id=SA;Password=Onuraktas1234;TrustServerCertificate=True;");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
