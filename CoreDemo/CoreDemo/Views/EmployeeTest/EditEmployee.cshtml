@@ -1,0 +1,14 @@
+@model CoreDemo.Controllers.Employee
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_AdminLayout";
+}
+
+<form asp-action="EditEmployee" asp-controller="EmployeeTest"  method="POST"  >
+    <label>Çalışan Ad Soyad</label>
+    <input asp-for="Name" class="form-control" />
+    <br>
+    <button type="submit" class="btn btn-outline-primary">Güncelle</button>
+</form>
+
