@@ -33,6 +33,7 @@ public class RegisterUserController : Controller
                 UserName = p.UserName,
                 Email = p.Mail,
                 NameSurname = p.NameSurname,
+                ImageUrl = "Boş"
             };
             var result = await _userManager.CreateAsync(appUser, p.Password);
 

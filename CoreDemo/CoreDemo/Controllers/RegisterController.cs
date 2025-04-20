@@ -12,6 +12,7 @@ namespace CoreDemo.Controllers
     public class RegisterController : Controller
     {
         WriterManager _writerManager = new(new EfWriterRepository());
+
         public IActionResult Index()
         {
             return View();
@@ -21,7 +22,7 @@ namespace CoreDemo.Controllers
         public IActionResult Index(Writer p)
         {
             WriterValidator validationRules = new();
-
+       
             ValidationResult results = validationRules.Validate(p);
 
             if (results.IsValid)
@@ -37,6 +38,7 @@ namespace CoreDemo.Controllers
                 {
                     ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
                 }
+
                 return View();
             }
         }
