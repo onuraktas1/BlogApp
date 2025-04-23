@@ -3,8 +3,27 @@
     @* <form action="/NewsLetter/SubscribeMail/" method="post"> *@
 
     <form asp-action="SubscribeMail" asp-controller="NewsLetter" method="post">
-        <input type="email" placeholder="Email" required="" name="Mail">
-        <input type="submit" value="Abone ol">
+        <input type="email" placeholder="Email" required="" name="Mail" id="txtmail">
+        <input type="submit" id="btn" value="Abone ol">
     </form>
-
 </div>
+
+
+<script type="text/javascript">
+    $("#btn").click(function (){
+        let values={
+            Mail:$("#txtmail").val()
+        };
+        
+        $.ajax({
+            type:"post",
+            url:"/NewsLetter/SubscribeMail/",
+            data:values,
+            success:function (func){
+                let result=jQuery.parseJSON(func);
+            }
+        });
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>

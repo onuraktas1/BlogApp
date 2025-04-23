@@ -15,11 +15,13 @@ namespace CoreDemo.Controllers
         private readonly BlogManager _blogManager = new(new EfBlogRepository());
         private readonly CategoryManager categoryManager = new(new EfCategoryRepository());
         private readonly WriterManager _writerManager = new(new EfWriterRepository());
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View(_blogManager.GetListWithCategory());
         }
 
+        [AllowAnonymous]
         public IActionResult BlogAllRead(int id)
         {
             var data = _blogManager.GetAll(id);
