@@ -57,13 +57,18 @@ namespace CoreDemo.Controllers
             return PartialView();
         }
 
-        public IActionResult WriterEditProfile()
+        public async Task<IActionResult> WriterEditProfile()
         {
-            var userName = User.Identity.Name;
-            var userMail = _context.Users.Where(x => x.UserName == userName).Select(y => y.Email).FirstOrDefault();
-            var writerId = _writerManager.GetAll().Where(x => x.Mail == userMail).Select(x => x.Id).FirstOrDefault();
-            var writerData = _writerManager.GetById(writerId);
-            return View(writerData);
+            // var userName = User.Identity.Name;
+            // var userMail = _context.Users.Where(x => x.UserName == userName).Select(y => y.Email).FirstOrDefault();
+            // var writerId = _writerManager.GetAll().Where(x => x.Mail == userMail).Select(x => x.Id).FirstOrDefault();
+            // var writerData = _writerManager.GetById(writerId);
+
+            // UserManager userManager = new(new EfUserRepository());
+            var values = await _userManager.FindByNameAsync(User.Identity.Name);
+            // var id = _context.Users.Where(x => x.UserName == values.UserName).FirstOrDefault().Id;
+            // var data = userManager.GetById(id);
+            return View(values);
         }
 
         [HttpPost]
