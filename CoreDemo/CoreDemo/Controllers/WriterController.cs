@@ -8,12 +8,22 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Elfie.Serialization;
 using System.Security.Claims;
+using DataAccessLayer.Concrete;
+using Microsoft.AspNetCore.Identity;
 
 namespace CoreDemo.Controllers
 {
     public class WriterController : Controller
     {
         private readonly WriterManager _writerManager = new(new EfWriterRepository());
+        private readonly Context _context = new();
+        private readonly UserManager<AppUser> _userManager;
+
+        public WriterController(UserManager<AppUser> userManager)
+        {
+            _userManager = userManager;
+        }
+
         [Authorize]
         public IActionResult Index()
         {
@@ -21,14 +31,17 @@ namespace CoreDemo.Controllers
             ViewBag.v = userMail;
             return View();
         }
+
         public IActionResult WriterProfile()
         {
             return View();
         }
+
         public IActionResult WriterMail()
         {
             return View();
         }
+
         public IActionResult Test()
         {
             return View();
@@ -46,8 +59,8 @@ namespace CoreDemo.Controllers
 
         public IActionResult WriterEditProfile()
         {
-            var userMail = User.Identity.Name;
-
+            var userName = User.Identity.Name;
+            var userMail = _context.Users.Where(x => x.UserName == userName).Select(y => y.Email).FirstOrDefault();
             var writerId = _writerManager.GetAll().Where(x => x.Mail == userMail).Select(x => x.Id).FirstOrDefault();
             var writerData = _writerManager.GetById(writerId);
             return View(writerData);
@@ -72,6 +85,7 @@ namespace CoreDemo.Controllers
                     ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
                 }
             }
+
             return View();
         }
 
@@ -94,6 +108,7 @@ namespace CoreDemo.Controllers
                 addProfileImage.Image.CopyTo(stream);
                 writer.Image = newImageName;
             }
+
             writer.Mail = addProfileImage.Mail;
             writer.Name = addProfileImage.Name;
             writer.Password = addProfileImage.Password;
@@ -103,6 +118,5 @@ namespace CoreDemo.Controllers
 
             return RedirectToAction("Index", "DashBoard");
         }
-
     }
 }
