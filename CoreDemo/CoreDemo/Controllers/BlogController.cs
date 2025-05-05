@@ -1,5 +1,7 @@
-﻿using BusinessLayer.Concrete;
+﻿using System.Security.Claims;
+using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
+using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation;
@@ -15,6 +17,8 @@ namespace CoreDemo.Controllers
         private readonly BlogManager _blogManager = new(new EfBlogRepository());
         private readonly CategoryManager categoryManager = new(new EfCategoryRepository());
         private readonly WriterManager _writerManager = new(new EfWriterRepository());
+        private readonly Context _context = new();
+
         [AllowAnonymous]
         public IActionResult Index()
         {
@@ -30,23 +34,22 @@ namespace CoreDemo.Controllers
 
         public IActionResult BlogListByWriter()
         {
-            var userMail = User.Identity.Name;
+            var userName = User.Identity.Name;
+            var userMail = _context.Users.Where(x => x.UserName == userName).Select(y => y.Email).FirstOrDefault();
             var writerId = _writerManager.GetAll().Where(x => x.Mail == userMail).Select(x => x.Id).FirstOrDefault();
-
             var data = _blogManager.GetListWithCategory().Where(x => x.WriterId == writerId).ToList();
+            //  User.FindFirstValue(ClaimTypes.NameIdentifier);
             return View(data);
         }
 
         public IActionResult BlogAdd()
         {
-
             List<SelectListItem> categoryValue = (from x in categoryManager.GetAll()
-                                                  select new SelectListItem
-                                                  {
-                                                      Text = x.Name,
-                                                      Value = x.Id.ToString()
-
-                                                  }).ToList();
+                select new SelectListItem
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString()
+                }).ToList();
 
             ViewBag.CategoryValue = categoryValue;
             return View();
@@ -76,6 +79,7 @@ namespace CoreDemo.Controllers
                 {
                     ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
                 }
+
                 return View();
             }
         }
@@ -92,12 +96,11 @@ namespace CoreDemo.Controllers
         public IActionResult Edit(int id)
         {
             List<SelectListItem> categoryValue = (from x in categoryManager.GetAll()
-                                                  select new SelectListItem
-                                                  {
-                                                      Text = x.Name,
-                                                      Value = x.Id.ToString()
-
-                                                  }).ToList();
+                select new SelectListItem
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString()
+                }).ToList();
             ViewBag.CategoryValue = categoryValue;
             var value = _blogManager.GetById(id);
             return View(value);
@@ -117,8 +120,5 @@ namespace CoreDemo.Controllers
             _blogManager.Update(blog);
             return RedirectToAction("BlogListByWriter");
         }
-
-
-
     }
 }

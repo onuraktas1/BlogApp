@@ -59,39 +59,49 @@ namespace CoreDemo.Controllers
 
         public async Task<IActionResult> WriterEditProfile()
         {
-            // var userName = User.Identity.Name;
-            // var userMail = _context.Users.Where(x => x.UserName == userName).Select(y => y.Email).FirstOrDefault();
-            // var writerId = _writerManager.GetAll().Where(x => x.Mail == userMail).Select(x => x.Id).FirstOrDefault();
-            // var writerData = _writerManager.GetById(writerId);
-
-            // UserManager userManager = new(new EfUserRepository());
             var values = await _userManager.FindByNameAsync(User.Identity.Name);
-            // var id = _context.Users.Where(x => x.UserName == values.UserName).FirstOrDefault().Id;
-            // var data = userManager.GetById(id);
-            return View(values);
+            UserUpdateViewModel model = new UserUpdateViewModel();
+            model.Email = values.Email;
+            model.NameSurname = values.NameSurname;
+            model.ImageUrl = values.ImageUrl;
+            model.UserName = values.UserName;
+            return View(model);
         }
 
         [HttpPost]
-        public IActionResult WriterEditProfile(Writer writer)
+        public async Task<IActionResult> WriterEditProfile(UserUpdateViewModel model)
         {
-            WriterValidator writerValidator = new();
-            writer.Image = "Bos";
-            ValidationResult result = writerValidator.Validate(writer);
-
-            if (result.IsValid)
+            var values = await _userManager.FindByNameAsync(User.Identity.Name);
+            values.Email = model.Email;
+            values.NameSurname = model.NameSurname;
+            values.ImageUrl = model.ImageUrl;
+            values.UserName = model.UserName;
+            values.PasswordHash = _userManager.PasswordHasher.HashPassword(values, model.Password);
+            // WriterValidator writerValidator = new();
+            // writer.Image = "Bos";
+            // ValidationResult result = writerValidator.Validate(writer);
+            //
+            // if (result.IsValid)
+            // {
+            var result = await _userManager.UpdateAsync(values);
+            if (result.Succeeded)
             {
-                _writerManager.Update(writer);
                 return RedirectToAction("Index", "DashBoard");
             }
             else
             {
-                foreach (var item in result.Errors)
-                {
-                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
-                }
+                return View();
             }
+            // }
+            // else
+            // {
+            //     foreach (var item in result.Errors)
+            //     {
+            //         ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+            //     }
+            // }
 
-            return View();
+            // return View();
         }
 
         [AllowAnonymous, HttpGet]
@@ -122,6 +132,12 @@ namespace CoreDemo.Controllers
             _writerManager.Add(writer);
 
             return RedirectToAction("Index", "DashBoard");
+        }
+
+        public async Task<IActionResult> LogOut()
+        {
+            
+            return View("Index");
         }
     }
 }
