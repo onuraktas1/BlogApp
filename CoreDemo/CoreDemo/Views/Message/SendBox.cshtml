@@ -1,16 +1,17 @@
-﻿@using EntityLayer.Concrete
+@using EntityLayer.Concrete
 @model List<Message2>
+
 @{
-    ViewData["Title"] = "InBox";
+    ViewBag.Title = "title";
     Layout = "~/Views/Shared/_WriterLayout.cshtml";
 }
 
-<h1>Gelen Kutusu</h1>
+<h1>Giden Kutusu</h1>
 <table class="table table-bordered">
     <tr>
         <th>#</th>
         <th>Konu</th>
-        <th>Gönderen</th>
+        <th>Alıcı</th>
         <th>Tarih</th>
         <th>Mesajı Aç</th>
     </tr>
@@ -20,11 +21,9 @@
         <tr>
             <th>@item.Id</th>
             <td>@item.Subject</td>
-            <td> <span class="badge badge-primary"> @item.SenderUser.Name</span></td>
+            <td> <span class="badge badge-primary"> @item.ReceiverUser.Name</span></td>
             <td>@(((DateTime)item.Date).ToString("dd-MMM-yyyy"))</td>
             <td><a href="/Message/MessageDetails/@item.Id" class="btn btn-warning">Mesajı Aç</a></td>
         </tr>
     }
 </table>
-
-<a href="/Message/SendMessage" class="btn btn-primary">Yeni Mesaj Oluştur</a>

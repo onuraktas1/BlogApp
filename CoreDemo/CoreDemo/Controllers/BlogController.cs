@@ -32,7 +32,7 @@ namespace CoreDemo.Controllers
             return View(data);
         }
 
-        public IActionResult BlogListByWriter()
+        public IActionResult BlogListByWriter() 
         {
             var userName = User.Identity.Name;
             var userMail = _context.Users.Where(x => x.UserName == userName).Select(y => y.Email).FirstOrDefault();
@@ -62,8 +62,10 @@ namespace CoreDemo.Controllers
             BlogValidator validationRules = new();
 
             ValidationResult results = validationRules.Validate(blog);
-            var userMail = User.Identity.Name;
+            var userName = User.Identity.Name;
+            var userMail = _context.Users.Where(x => x.UserName == userName).Select(y => y.Email).FirstOrDefault();
             var writerId = _writerManager.GetAll().Where(x => x.Mail == userMail).Select(x => x.Id).FirstOrDefault();
+            
 
             if (results.IsValid)
             {
@@ -109,9 +111,9 @@ namespace CoreDemo.Controllers
         [HttpPost]
         public IActionResult Edit(Blog blog)
         {
-            var userMail = User.Identity.Name;
+            var userName = User.Identity.Name;
+            var userMail = _context.Users.Where(x => x.UserName == userName).Select(y => y.Email).FirstOrDefault();
             var writerId = _writerManager.GetAll().Where(x => x.Mail == userMail).Select(x => x.Id).FirstOrDefault();
-
 
             Blog oldBlog = _blogManager.GetById(blog.Id);
             blog.WriterId = writerId;

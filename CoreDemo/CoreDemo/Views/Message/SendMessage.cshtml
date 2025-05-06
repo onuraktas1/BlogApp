@@ -1,0 +1,28 @@
+@model EntityLayer.Concrete.Message2
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_WriterLayout.cshtml";
+}
+
+
+
+<form asp-controller="Message" asp-action="SendMessage" method="post">
+
+    <label for="">Alıcı</label>
+    <input type="text" class="form-control">
+    <br>
+    <label for="validationCustom01">Konu</label>
+    <input asp-for="Subject" class="form-control" />
+    <span asp-validation-for="Subject" class="text-danger"></span>
+    <br>
+
+    <label for="validationCustom02">Mesaj İçeriği</label>
+    <textarea asp-for="Details" class="form-control" rows="15" cols="3"></textarea>
+    <span asp-validation-for="Details" class="text-danger"></span>
+    <br>
+
+    <button type="submit" class="btn btn-primary submit mb-4">Gönder</button>
+
+
+</form>

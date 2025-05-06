@@ -44,7 +44,7 @@ namespace CoreDemo
             builder.Services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
                 options.LoginPath = "/Login/Index/";
                 options.SlidingExpiration = true;
                 options.Cookie.IsEssential = true;
