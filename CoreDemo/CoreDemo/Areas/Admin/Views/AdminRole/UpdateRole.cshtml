@@ -1,0 +1,35 @@
+@using CoreDemo.Models
+@model RoleUpdateViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_AdminLayout";
+}
+
+<h2>Role Düzenleme Sayfası</h2>
+
+<form asp-controller="AdminRole" asp-action="UpdateRole" method="post">
+    <div class="row">
+        <div class="form-group col-md-4">
+            <label for="">Rol Başlığı</label>
+            <input asp-for="Id" class="form-control">
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="form-group col-md-4">
+            <label for="">Rol Başlığı</label>
+            <input asp-for="Name" class="form-control">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-4">
+            <button class="btn btn-info">Kaydet</button>
+        </div>
+    </div>
+
+    <div asp-validation-summary="ModelOnly"></div>
+</form>
+

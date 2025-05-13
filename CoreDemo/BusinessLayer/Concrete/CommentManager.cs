@@ -12,11 +12,12 @@ namespace BusinessLayer.Concrete
     public class CommentManager : ICommentService
     {
         ICommentDal _commentDal;
+
         public CommentManager(ICommentDal commentDal)
         {
             _commentDal = commentDal;
-
         }
+
         public void Add(Comment comment)
         {
             _commentDal.Add(comment);
@@ -25,6 +26,11 @@ namespace BusinessLayer.Concrete
         public List<Comment> GetAll(int id)
         {
             return _commentDal.GetAll(x => x.BlogId == id);
+        }
+
+        public List<Comment> GetAllWithBlog()
+        {
+            return _commentDal.GetListWithBlog();
         }
     }
 }

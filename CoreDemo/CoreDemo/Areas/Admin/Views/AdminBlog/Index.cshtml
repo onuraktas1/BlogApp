@@ -1,0 +1,51 @@
+@using EntityLayer.Concrete
+@model List<Blog>
+@{
+    ViewBag.Title = "title";
+    Layout = "_AdminLayout";
+}
+
+
+<body>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3">
+                <div class="ibox">
+                    <div class="ibox-content product-box">
+
+                        <div>
+                            <img src="@item.Image" height="225" width="240" alt="Fotoğrafa erişilemedi">
+                        </div>
+                        <div class="product-desc">
+                                    <span class="product-price">
+                                        @(((DateTime)item.CreateDate).ToString("dd-MMM-yyyy"))
+                                    </span>
+                            <small class="text-muted">@item.Category.Name</small>
+                            <a href="#" class="product-name"> @item.Title</a>
+
+
+                            <div class="small m-t-xs">
+                                @if (item.Content.Length >= 130)
+                                {
+                                    <p>@item.Content.Substring(0, item.Content.Substring(0, 130).LastIndexOf(" "))<strong>...</strong></p>
+                                }
+                                else
+                                {
+                                    <p> @item.Content.ToString()</p>
+                                }
+                            </div>
+                            <div class="m-t text-righ">
+
+                                <a href="/Blog/BlogAllRead/@item.Id/" class="btn btn-xs btn-outline btn-primary">Detaylar <i
+                                        class="fa fa-long-arrow-right"></i> </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+</body>
