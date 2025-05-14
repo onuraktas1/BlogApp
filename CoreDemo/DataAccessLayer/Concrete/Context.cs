@@ -9,12 +9,12 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace DataAccessLayer.Concrete
 {
-    public class Context : IdentityDbContext<AppUser,AppRole,int>
+    public class Context : IdentityDbContext<AppUser, AppRole, int>
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // optionsBuilder.UseSqlServer("Server=.;Database=BlogDb;Trusted_Connection=True;TrustServerCertificate=true");
-            optionsBuilder.UseSqlServer("Server=77.245.159.121\\MSSQLSERVER2022;database=BlogDb;user=antirako93;password=*8118iErw");
+            //optionsBuilder.UseSqlServer("Server=.;Database=BlogDb;Trusted_Connection=True;TrustServerCertificate=true");
+            optionsBuilder.UseSqlServer("Server=77.245.159.121\\MSSQLSERVER2022;database=BlogDb;user=antirako93;password=*8118iErw;TrustServerCertificate=true");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -32,7 +32,7 @@ namespace DataAccessLayer.Concrete
                 .WithMany(y => y.WriterReceiver)
                 .HasForeignKey(z => z.ReceiverId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
-            
+
             base.OnModelCreating(modelBuilder);
 
         }
