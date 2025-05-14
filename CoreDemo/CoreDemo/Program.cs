@@ -46,7 +46,7 @@ namespace CoreDemo
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
                 options.AccessDeniedPath= new PathString("/Login/AccessDenied");
-                options.LoginPath = "/Login/Index/";
+                options.LoginPath = "/Login/Index";
                 options.SlidingExpiration = true;
                 options.Cookie.IsEssential = true;
 
